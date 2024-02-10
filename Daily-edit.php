@@ -61,7 +61,7 @@
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <div class="card-title">Daily expenses Create Form</div>
+                                    <div class="card-title">Daily expenses Edit Form</div>
                                 </div>
                                 <div class="col-md-6">
                                     <a href="index.php" class="btn btn-warning"> << Back </a>

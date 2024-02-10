@@ -1,3 +1,6 @@
+<?php 
+    require "connect.php";
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,7 +31,7 @@
                                     <div class="card-title">Daily expenses list</div>
                                 </div>
                                 <div class="col-md-6">
-                                    <a href="Daily-create.php" class="btn btn-success">+Add New</a>
+                                    <a href="Daily-create.php" class="btn btn-primary">+Add New</a>
                                 </div>
                             </div>
                         </div>
@@ -38,30 +41,46 @@
                                     <tr>
                                         <td>Id</td>
                                         <td>Name</td>
+                                        <td>Description</td>
                                         <td>Price</td>
                                         <td>Type</td>
-                                        <td>Description</td>
-                                        <td>Create-Date</td>
-                                        <td>Updated-Date</td>
+                                        <td>Create-Date & Time</td>
+                                        <td>Updated-Date & Time</td>
+                                        <td>Action of informations</td>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>dkf</td>
-                                        <td>fg</td>
-                                        <td>fgfg</td>
-                                        <td>dfjdl</td>
-                                        <td></td>
-                                        <td>
-                                            <a href="">Edit</a> |
-                                            <a href="">Delete</a>
-                                        </td>
-                                    </tr>
+                                    <?php 
+                                        $query = "SELECT * FROM daily_expenses";
+                                        $query_run = mysqli_query($db,$query);
+                                        foreach($query_run as $post){
+                                    ?>
+
+                                            <tr>
+                                                <td><?php echo $post['id']; ?></td>
+                                                <td><?php echo $post['name']; ?></td>
+                                                <td><?php echo $post['description']; ?></td>
+                                                <td><?php echo $post['price']; ?></td>
+                                                <td><?php echo $post['type']; ?></td>
+                                                <td>
+                                                    <?php
+                                                        
+                                                    ?>
+                                                </td>
+                                                <td>123456</td>
+                                                <td>
+                                                    <a href="Daily-edit.php">Edit</a> |
+                                                    <a href="">Delete</a>
+                                                </td>
+                                            </tr>
+                                    <?php 
+                                        }
+                                    ?>
+
                                 </tbody>
                             </table>
                         </div>
-                        <div class="card-footer">                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </div>
+                        <div class="card-footer">                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   </div>
                     </div>
                 </div>
             </div>
