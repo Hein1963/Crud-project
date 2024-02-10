@@ -1,5 +1,6 @@
 <?php 
     require "connect.php";
+    session_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,9 +16,12 @@
         div.card-title {
             color:blue;
         }
-        /*div.card-body{
+        div.card-body{
             background-color: gray;
-        }*/
+        }
+        div.card-header{
+            background-color: yellowgreen;
+        }
     </style>
 </head>
 <body>
@@ -36,6 +40,7 @@
                             </div>
                         </div>
                         <div class="card-body">
+                            <?php  echo $_SESSION['successMsg']; ?>
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
@@ -63,9 +68,7 @@
                                                 <td><?php echo $post['price']; ?></td>
                                                 <td><?php echo $post['type']; ?></td>
                                                 <td>
-                                                    <?php
-                                                        
-                                                    ?>
+                                                    <?php echo $post['created_at']; ?>
                                                 </td>
                                                 <td>123456</td>
                                                 <td>

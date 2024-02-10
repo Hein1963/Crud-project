@@ -1,3 +1,6 @@
+<?php 
+    session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,18 +16,41 @@
 </head>
 <body>
     <?php 
+        /*Date and time
+        date_default_timezone_set('Asia/Rangoon');
+        $now = new DateTime();
+        echo $now ->format('Y-m-d |h:i:s');
+        echo $now ->getTimestamp();*/
+
+
+
+
+
+
         $nameError = "";
         $priceError = "";
         $descError = "";
         $typeError = "";
         $input_name = "";
         $price = "";
+        $created_atError = "";
+        $description = "";
+        
+        
+       
+        
+        
         require "connect.php";
         if(isset($_POST['Daily-create-button'])){
             $input_name = $_POST['name'];
             $description = $_POST['description'];
             $price = $_POST['price'];
             $type = $_POST['type'];
+            $created_at = $_POST['created_at'];
+           
+            
+            
+
 
             if(empty($input_name)){
                 $nameError = "Please input the type of Daily expense name!";
@@ -35,13 +61,17 @@
             if(empty($description)){
                 $descError = "Please input the description!";
             }
-            if($type == ''){
+            if(empty($type)){
                 $typeError = "Please choose the type of expenses!";
             }
-            if(!empty($input_name) && !empty($price) && !empty($description)){
-                $query = "INSERT INTO daily_expenses (name,description,price,type) VALUES('$input_name','$description','$price','$type')";
+            if(empty($created_at)){
+                $created_atError = "Please choose the date!";
+            }
+            if(!empty($input_name) && !empty($price) && !empty($description) && !empty($type) && !empty($created_at)){
+                $query = "INSERT INTO daily_expenses (name,description,price,type,created_at) VALUES('$input_name','$description','$price','$type','$created_at')";
                 mysqli_query($db,$query);
                 header("location:index.php");
+                $_SESSION['successMsg'] = 'A list of Daily expense created successfully*';
         }
             }
 
@@ -66,34 +96,44 @@
                                 <div class="col-md-6">
                                     <a href="index.php" class="btn btn-warning"> << Back </a>
                                 </div>
+                                
                             </div>
                         </div>
                         <form action="Daily-create.php" method="POST">
                         <div class="card-body">
                             <div class="form-group">
-                                <input type="text" name="name" class="form-control mb-3<?php if($nameError != ''): ?> is-invalid <?php endif ?>" value="<?php echo $input_name; ?>"  placeholder="Enter name"> 
+                                <input type="text" name="name" class="form-control mb-3<?php if($nameError != ''): ?> is-invalid <?php endif ?>" value="<?php echo $input_name; ?>"  placeholder="Enter name..."> 
                                 <span class="text-danger"><?php echo $nameError ?></span>
-                                <input type="integer" name="price" class="form-control mb-3 <?php if($priceError != ''): ?>is-invalid <?php endif ?>" value="<?php echo $price; ?>" placeholder="Enter Price">
+                                <input type="integer" name="price" class="form-control mb-3 <?php if($priceError != ''): ?>is-invalid <?php endif ?>" value="<?php echo $price; ?>" placeholder="Enter Price...">
                                 <span class="text-danger"><?php echo $priceError ?></span>
                                 <div class="selection mb-3">
                                 <label for="type" class="mb-3">Expenses Type :</label>
                                     <select name="type" id="type">
                                         <option value="">Select A Type</option>
-                                        <option value="1">Food expense costs</option>
-                                        <option value="2">Living expense costs</option>
-                                        <option value="3">Transportation expense costs</option>
+                                        <option value="Food expense costs">Food expense costs</option>
+                                        <option value="Living expense cost">Living expense costs</option>
+                                        <option value="Transportation expense cost">Transportation expense costs</option>
                                     </select>
                                     <span class="text-danger"><?php echo $typeError ?></span>
+                                    
                                 </div>
                             </div>
                             <div class="form-group">
-                                <textarea type="text" name="description" class="form-control <?php if($descError != ''):?>is-invalid <?php endif ?>" placeholder="Description..."></textarea>
+                                <textarea type="text" name="description" class="form-control <?php if($descError != ''):?>is-invalid <?php endif ?>" placeholder="Description..."><?php echo $description ?></textarea>
                                 <span class="text-danger"><?php echo $descError ?></span>
                             </div>
                         </div>
                         
                         <div class="card-footer">
-                            <button class="btn btn-success" name="Daily-create-button" type ="submit">Create</button>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <button class="btn btn-success" name="Daily-create-button" type ="submit">Create</button>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="datetime-local" name="created_at" class="form-control <?php if($created_atError != ''): ?>is-invalid <?php endif ?>">
+                                    <span class="text-danger"><?php echo $created_atError ?></span>
+                                </div>
+                            </div>
                         </div>
                         </form>
                     </div>
