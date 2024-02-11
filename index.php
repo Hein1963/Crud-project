@@ -1,6 +1,7 @@
 <?php 
     require "connect.php";
     session_start();
+    
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -22,6 +23,12 @@
         div.card-header{
             background-color: yellowgreen;
         }
+        div.card-body{
+            background-color: peachpuff;
+        }
+        div.card-footer{
+            background-color: sienna;
+        }
     </style>
 </head>
 <body>
@@ -40,7 +47,7 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <?php  echo $_SESSION['successMsg']; ?>
+                            <?php ## echo $_SESSION['successMsg'];## ?>
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
@@ -70,9 +77,14 @@
                                                 <td>
                                                     <?php echo $post['created_at']; ?>
                                                 </td>
-                                                <td>123456</td>
                                                 <td>
-                                                    <a href="Daily-edit.php">Edit</a> |
+                                                    <?php echo $post['updated_at']; ?>
+                                                </td>
+                                                <td>
+                                                    <a href="Daily-edit-2.php?postId=<?php echo $post['id']; ?>">
+                                                    Edit
+                                                    </a> 
+                                                    |
                                                     <a href="">Delete</a>
                                                 </td>
                                             </tr>
@@ -83,7 +95,9 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="card-footer">                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   </div>
+                        <div class="card-footer"> 
+                            Hein
+                        </div>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  </div>
                     </div>
                 </div>
             </div>

@@ -1,5 +1,5 @@
-<?php 
-    session_start();
+<?php
+    require "connect.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,41 +12,23 @@
         body {
             padding:35px;
         }
-        div.card-body {
-            background-color: peachpuff;
-        }
-        div.card-footer{
-            background-color: rosybrown;
-        }
     </style>
 </head>
 <body>
     <?php 
-        /*Date and time
-        date_default_timezone_set('Asia/Rangoon');
-        $now = new DateTime();
-        echo $now ->format('Y-m-d |h:i:s');
-        echo $now ->getTimestamp();*/
-
-
-
-
-
-
         $nameError = "";
         $priceError = "";
         $descError = "";
         $typeError = "";
-        $input_name = "";
-        $price = "";
         $created_atError = "";
-        $description = "";
+        /* $input_name = "";
+        ##$price = "";
+        ##$description = "";
         
         
-       
         
         
-        require "connect.php";
+        ##require "connect.php";
         if(isset($_POST['Daily-create-button'])){
             $input_name = $_POST['name'];
             $description = $_POST['description'];
@@ -54,9 +36,6 @@
             $type = $_POST['type'];
             $created_at = $_POST['created_at'];
            
-            
-            
-
 
             if(empty($input_name)){
                 $nameError = "Please input the type of Daily expense name!";
@@ -77,27 +56,56 @@
                 $query = "INSERT INTO daily_expenses (name,description,price,type,created_at) VALUES('$input_name','$description','$price','$type','$created_at')";
                 mysqli_query($db,$query);
                 header("location:index.php");
-                $_SESSION['successMsg'] = 'A list of Daily expense created successfully*';
+                
         }
+            } */
+
+       if(isset($_GET['postId'])){
+
+        $post_id_to_update = $_GET['postId'];
+
+        $post = mysqli_query($db,"SELECT * FROM daily_expenses WHERE id=$post_id_to_update");
+
+        if(mysqli_num_rows($post) == 1){
+            foreach($post as $row){
+                $postId = $row['id'];
+                $postName = $row['name'];
+                $postPrice = $row['price'];
+                $postDescription = $row['description'];
+                $postType = $row['type'];
+                
             }
+        }
+       }
+       
+       //Update list
+       if(isset($_POST['Daily-update-button'])){
+             $id = $_POST['update_id'];
+             $name = $_POST['name'];
+             $price = $_POST['price'];
+             $description = $_POST['description'];
+             $type = $_POST['type'];
+             $updated = $_POST['updated_at'];
 
-            /*$currentDate = date('Y-m-d H:i:s');
-            echo $currentDate;*/
-            
-            
+             $query = "UPDATE daily_expenses SET name='$name', description='$description', price='$price', type='$type', updated_at='$updated' WHERE id = $post_id_to_update";
+             mysqli_query($db,$query);
+             header('location:index.php');
+       }
+    
+       
 
-           /* $query = "INSERT INTO daily_expenses (name,description,price,type) VALUES('$name','$description','$price','$type')";
-            mysqli_query($db,$query);
-        }*/
+
+
+
     ?>
     <div class="container">
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
-                        <div class="card-header" style="background:yellowgreen">
+                        <div class="card-header">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <div class="card-title">Daily expenses Create Form</div>
+                                    <div class="card-title">Daily expenses Edition Form</div>
                                 </div>
                                 <div class="col-md-6">
                                     <a href="index.php" class="btn btn-info"> << Back </a>
@@ -105,12 +113,14 @@
                                 
                             </div>
                         </div>
-                        <form action="Daily-create.php" method="POST">
+                        <form action="" method="POST">
                         <div class="card-body">
+                            <label for="type">Number of list Update:</label>
+                            <input type="text" class="mb-2" name="update_id" value="<?php echo $postId; ?>">
                             <div class="form-group">
-                                <input type="text" name="name" class="form-control mb-3<?php if($nameError != ''): ?> is-invalid <?php endif ?>" value="<?php echo $input_name; ?>"  placeholder="Enter name..."> 
+                                <input type="text" name="name" class="form-control mb-3<?php if($nameError != ''): ?> is-invalid <?php endif ?>" value="<?php echo $postName; ?>"  placeholder="Enter name..."> 
                                 <span class="text-danger"><?php echo $nameError ?></span>
-                                <input type="integer" name="price" class="form-control mb-3 <?php if($priceError != ''): ?>is-invalid <?php endif ?>" value="<?php echo $price; ?>" placeholder="Enter Price...">
+                                <input type="integer" name="price" class="form-control mb-3 <?php if($priceError != ''): ?>is-invalid <?php endif ?>" value="<?php echo $postPrice; ?>" placeholder="Enter Price...">
                                 <span class="text-danger"><?php echo $priceError ?></span>
                                 <div class="selection mb-3">
                                 <label for="type" class="mb-3">Expenses Type :</label>
@@ -125,7 +135,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <textarea type="text" name="description" class="form-control <?php if($descError != ''):?>is-invalid <?php endif ?>" placeholder="Description..."><?php echo $description ?></textarea>
+                                <textarea type="text" name="description" class="form-control <?php if($descError != ''):?>is-invalid <?php endif ?>" placeholder="Description..."><?php echo $postDescription; ?></textarea>
                                 <span class="text-danger"><?php echo $descError ?></span>
                             </div>
                         </div>
@@ -133,10 +143,10 @@
                         <div class="card-footer">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <button class="btn btn-success" name="Daily-create-button" type ="submit">Create</button>
+                                    <button class="btn btn-warning" name="Daily-update-button" type ="submit">Update</button>
                                 </div>
                                 <div class="col-md-6">
-                                    <input type="datetime-local" name="created_at" class="form-control <?php if($created_atError != ''): ?>is-invalid <?php endif ?>" style="background:AntiqueWhite;>
+                                    <input type="datetime-local" name="updated_at" class="form-control <?php if($created_atError != ''): ?>is-invalid <?php endif ?>" style="background:AntiqueWhite" value="<?php echo $postDate;  ?>">
                                     <span class="text-danger"><?php echo $created_atError ?></span>
                                 </div>
                             </div>
@@ -146,12 +156,6 @@
                 </div>
             </div>
     </div>
-
-
-
-
-
-
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
