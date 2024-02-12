@@ -14,6 +14,9 @@
         body {
             padding:35px;
         }
+        body {
+            background-color: lightgrey;
+        }
         div.card-title {
             color:blue;
         }
@@ -27,7 +30,10 @@
             background-color: peachpuff;
         }
         div.card-footer{
-            background-color: sienna;
+            background-color: rosybrown;
+        }
+        a{
+            text-decoration: none;
         }
     </style>
 </head>
@@ -41,8 +47,12 @@
                                 <div class="col-md-6">
                                     <div class="card-title">Daily expenses list</div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-3">
                                     <a href="Daily-create.php" class="btn btn-primary">+Add New</a>
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="">Months of Date</label>
+                                    <input type="month" class="form-control">
                                 </div>
                             </div>
                         </div>
@@ -96,7 +106,7 @@
                             </table>
                         </div>
                         <div class="card-footer"> 
-                            Hein
+                                dsflksdf;lgjsd;fgjsd;fgsa;jf
                         </div>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  </div>
                     </div>
                 </div>

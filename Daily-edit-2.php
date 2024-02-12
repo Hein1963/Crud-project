@@ -12,6 +12,21 @@
         body {
             padding:35px;
         }
+        body {
+            background-color: lightgrey;
+        }
+        div.card-title {
+            color: blue;
+        }
+        div.card-header{
+            background-color: yellowgreen;
+        }
+        div.card-body{
+            background-color: peachpuff;
+        }
+        div.card-footer{
+            background-color: rosybrown;
+        }
     </style>
 </head>
 <body>
@@ -21,44 +36,7 @@
         $descError = "";
         $typeError = "";
         $created_atError = "";
-        /* $input_name = "";
-        ##$price = "";
-        ##$description = "";
-        
-        
-        
-        
-        ##require "connect.php";
-        if(isset($_POST['Daily-create-button'])){
-            $input_name = $_POST['name'];
-            $description = $_POST['description'];
-            $price = $_POST['price'];
-            $type = $_POST['type'];
-            $created_at = $_POST['created_at'];
-           
-
-            if(empty($input_name)){
-                $nameError = "Please input the type of Daily expense name!";
-            }
-            if(empty($price)){
-                $priceError = "Please input the price of costing!";
-            }
-            if(empty($description)){
-                $descError = "Please input the description!";
-            }
-            if(empty($type)){
-                $typeError = "Please choose the type of expenses!";
-            }
-            if(empty($created_at)){
-                $created_atError = "Please choose the date!";
-            }
-            if(!empty($input_name) && !empty($price) && !empty($description) && !empty($type) && !empty($created_at)){
-                $query = "INSERT INTO daily_expenses (name,description,price,type,created_at) VALUES('$input_name','$description','$price','$type','$created_at')";
-                mysqli_query($db,$query);
-                header("location:index.php");
-                
-        }
-            } */
+        $updated_atError = "";
 
        if(isset($_GET['postId'])){
 
@@ -73,6 +51,13 @@
                 $postPrice = $row['price'];
                 $postDescription = $row['description'];
                 $postType = $row['type'];
+                ##$postcreated = $row['created_at'];
+
+                //Php Updated Date
+                date_default_timezone_set('Asia/Rangoon');
+                $date = date("Y-m-d");
+                $time = date("H:i:s");
+                $datetime = $date."T".$time;
                 
             }
         }
@@ -85,17 +70,38 @@
              $price = $_POST['price'];
              $description = $_POST['description'];
              $type = $_POST['type'];
-             $updated = $_POST['updated_at'];
+             $datetime = $_POST['updated_at'];
 
-             $query = "UPDATE daily_expenses SET name='$name', description='$description', price='$price', type='$type', updated_at='$updated' WHERE id = $post_id_to_update";
-             mysqli_query($db,$query);
-             header('location:index.php');
+            //Validation for Update!
+            if(empty($name)){
+                $nameError = "Please input the type of Daily expense name!";
+            }
+
+            if(empty($price)){
+                $priceError = "Please input the price of costing!";
+            }
+
+            if(empty($description)){
+                $descError = "Please input the description!";
+            }
+
+            if(empty($type)){
+                $typeError = "Please choose the type of expenses!";
+            }
+
+            /*if(empty($updated)){
+                $updated_atError = "Please choose the Today date!";
+            }*/
+            
+            if(!empty($name) && !empty($price) && !empty($description) && !empty($type)){
+                $query = "UPDATE daily_expenses SET name='$name', description='$description', price='$price', type='$type', updated_at='$datetime' WHERE id = $post_id_to_update";
+                mysqli_query($db,$query);
+                header('location:index.php');
+            }
+
+             
        }
     
-       
-
-
-
 
     ?>
     <div class="container">
@@ -115,8 +121,8 @@
                         </div>
                         <form action="" method="POST">
                         <div class="card-body">
-                            <label for="type">Number of list Update:</label>
-                            <input type="text" class="mb-2" name="update_id" value="<?php echo $postId; ?>">
+                            <label for="type" class="mb-2">Number of list Update:</label>
+                            <input type="hidden" class="mb-2" name="update_id" value="<?php echo $postId; ?>">
                             <div class="form-group">
                                 <input type="text" name="name" class="form-control mb-3<?php if($nameError != ''): ?> is-invalid <?php endif ?>" value="<?php echo $postName; ?>"  placeholder="Enter name..."> 
                                 <span class="text-danger"><?php echo $nameError ?></span>
@@ -146,8 +152,8 @@
                                     <button class="btn btn-warning" name="Daily-update-button" type ="submit">Update</button>
                                 </div>
                                 <div class="col-md-6">
-                                    <input type="datetime-local" name="updated_at" class="form-control <?php if($created_atError != ''): ?>is-invalid <?php endif ?>" style="background:AntiqueWhite" value="<?php echo $postDate;  ?>">
-                                    <span class="text-danger"><?php echo $created_atError ?></span>
+                                    <input type="datetime-local" name="updated_at" class="form-control <?php if($updated_atError != ''): ?>is-invalid <?php endif ?>" style="background:AntiqueWhite" value="<?php echo $datetime;?>">
+                                    <span class="text-danger"><?php echo $updated_atError ?></span>
                                 </div>
                             </div>
                         </div>

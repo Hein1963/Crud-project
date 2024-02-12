@@ -1,5 +1,5 @@
 <?php 
-    session_start();
+  
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -11,6 +11,15 @@
     <style type="text/css">
         body {
             padding:35px;
+        }
+        body {
+            background-color: lightgrey;
+        }
+        div.card-title {
+            color: blue;
+        }
+        div.card-header{
+            background-color: yellowgreen;
         }
         div.card-body {
             background-color: peachpuff;
@@ -42,6 +51,12 @@
         $created_atError = "";
         $description = "";
         
+        //Php Current Date 
+            date_default_timezone_set('Asia/Rangoon');
+            $date = date("Y-m-d");
+            $time = date("H:i:s");
+            $datetime = $date."T".$time;    
+            
         
        
         
@@ -52,10 +67,17 @@
             $description = $_POST['description'];
             $price = $_POST['price'];
             $type = $_POST['type'];
-            $created_at = $_POST['created_at'];
-           
+            $datetime = $_POST['created_at'];
+        
             
-            
+            //$created_at = $_POST['created_at'];
+
+            /*//Php current Date;
+            date_default_timezone_set('Asia/Rangoon');
+            $now = new DateTime();
+            $now ->format('Y-m-d |h:i:s');
+            $now ->format('Y-m-d |h:i:s');*/
+
 
 
             if(empty($input_name)){
@@ -70,31 +92,25 @@
             if(empty($type)){
                 $typeError = "Please choose the type of expenses!";
             }
-            if(empty($created_at)){
+            /*if(empty($created_at)){
                 $created_atError = "Please choose the date!";
-            }
-            if(!empty($input_name) && !empty($price) && !empty($description) && !empty($type) && !empty($created_at)){
-                $query = "INSERT INTO daily_expenses (name,description,price,type,created_at) VALUES('$input_name','$description','$price','$type','$created_at')";
+            }*/
+
+
+            if(!empty($input_name) && !empty($price) && !empty($description) && !empty($type)){
+                $query = "INSERT INTO daily_expenses (name,description,price,type,created_at) VALUES('$input_name','$description','$price','$type','$datetime')";
                 mysqli_query($db,$query);
                 header("location:index.php");
                 $_SESSION['successMsg'] = 'A list of Daily expense created successfully*';
         }
             }
 
-            /*$currentDate = date('Y-m-d H:i:s');
-            echo $currentDate;*/
-            
-            
-
-           /* $query = "INSERT INTO daily_expenses (name,description,price,type) VALUES('$name','$description','$price','$type')";
-            mysqli_query($db,$query);
-        }*/
     ?>
     <div class="container">
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
-                        <div class="card-header" style="background:yellowgreen">
+                        <div class="card-header">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="card-title">Daily expenses Create Form</div>
@@ -135,8 +151,12 @@
                                 <div class="col-md-6">
                                     <button class="btn btn-success" name="Daily-create-button" type ="submit">Create</button>
                                 </div>
-                                <div class="col-md-6">
-                                    <input type="datetime-local" name="created_at" class="form-control <?php if($created_atError != ''): ?>is-invalid <?php endif ?>" style="background:AntiqueWhite;>
+                                <div class="col-md-3">
+                                   
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="datetime-local" name="created_at" class="form-control <?php if($created_atError != ''): ?>is-invalid <?php endif ?>" style="background:AntiqueWhite;" value="<?php echo $datetime;
+                                    ?>">
                                     <span class="text-danger"><?php echo $created_atError ?></span>
                                 </div>
                             </div>
