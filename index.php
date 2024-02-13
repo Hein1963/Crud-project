@@ -38,6 +38,17 @@
     </style>
 </head>
 <body>
+    <?php 
+        if(isset($_GET['post_id_to_delete'])){
+            $post_id_to_update = $_GET['post_id_to_delete'];
+            $query = ("DELETE FROM daily_expenses WHERE id=$post_id_to_update");
+            mysqli_query($db,$query);
+            header('location:index.php');
+
+            /*date_default_timezone_set('Asia/Rangonn');
+            $date_of_months = date("m");*/
+        }
+    ?>
     <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -51,8 +62,14 @@
                                     <a href="Daily-create.php" class="btn btn-primary">+Add New</a>
                                 </div>
                                 <div class="col-md-3">
-                                    <label for="">Months of Date</label>
-                                    <input type="month" class="form-control">
+                                    <label for="">Calendar</label>
+                                    <input type="datetime-local" class="form-control" value="<?php 
+                                    date_default_timezone_set('Asia/Rangoon');
+                                    $date = date("Y-m-d");
+                                    $time = date("H:i:s");
+                                    $datetime = $date."T".$time;
+                                    echo $datetime;
+                                    ?>">
                                 </div>
                             </div>
                         </div>
@@ -95,7 +112,9 @@
                                                     Edit
                                                     </a> 
                                                     |
-                                                    <a href="">Delete</a>
+                                                    <a href="index.php?post_id_to_delete=<?php echo $post['id'] ?>" onclick="return confirm('Are you sure you want to delete?')">
+                                                    Delete
+                                                    </a>
                                                 </td>
                                             </tr>
                                     <?php 
@@ -106,7 +125,26 @@
                             </table>
                         </div>
                         <div class="card-footer"> 
-                                dsflksdf;lgjsd;fgjsd;fgsa;jf
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        HHHH
+                                    </div>
+                                    <div class="col-md-3">
+
+                                    </div>
+                                    <div class="col-md-3">
+                                    
+                                        <label for="" class="mb-2">To look months of list</label>
+                                        <input type="month" class="form-control mb-2" value="<?php 
+                                        date_default_timezone_set('Asia/Rangoon');
+                                        $months = date("Y-m");
+                                        echo $months;
+                                        ?>">
+                                        <a href="index2.php" class="btn btn-info"> >>Go To months of list</a>
+                                       
+                                    </div>
+                                    
+                                </div>
                         </div>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  </div>
                     </div>
                 </div>
