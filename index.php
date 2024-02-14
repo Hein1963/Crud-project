@@ -140,7 +140,10 @@
                                         $months = date("Y-m");
                                         echo $months;
                                         ?>">
-                                        <a href="index2.php" class="btn btn-info"> >>Go To months of list</a>
+                                        <!--a href="index2.php" class="btn btn-info"> >>Go To months of list</a-->
+                                        <form action="index2.php" method="POST">
+                                        <input type="submit" name="lastmonth-btn" class="btn btn-success form-control">
+                                        </form>
                                        
                                     </div>
                                     

@@ -45,25 +45,31 @@
                                 </thead>
                                 <tbody>
                                     <?php 
-                                         date_default_timezone_set('Asia/Rangoon');
-                                         ##$created_day = date('F', strtotime('-1 month'));
-                                         $created_day = date('d', strtotime('-1 day'));
-                                         $query = "SELECT * FROM daily_expenses /*WHERE $created_day = created_at*/";
+                                         ##date_default_timezone_set('Asia/Rangoon');
+                                         ##$previous_month = date('M', strtotime('-1 month'));
+                                         if(isset($_POST['lastmonth-btn'])){
+                                            
+                                         
+                                        
+                                         /*$query = "SELECT * FROM daily_expenses";
                                          $query_run = mysqli_query($db,$query);
-                                         foreach($query_run as $post){
+                                        
+                                         foreach($query_run as $post){*/
+                                         
+                                         
                                         
                                 
 
                                     ?>
 
                                         <tr>
-                                            <td><?php echo $post['id']; ?></td>
-                                            <td><?php echo $post['name']; ?></td>
-                                            <td><?php echo $post['description']; ?></td>
-                                            <td><?php echo $post['price']; ?> </td>
-                                            <td><?php echo $post['type']; ?></td>
-                                            <td><?php echo $post['created_at']; ?></td>
-                                            <td><?php echo $post['updated_at']; ?></td>
+                                            <td><?php ##echo $post['id']; ?> </td>
+                                            <td><?php ##echo $post['name']; ?></td>
+                                            <td><?php ##echo $post['description']; ?></td>
+                                            <td><?php ##echo $post['price']; ?></td>
+                                            <td><?php ##echo $post['type']; ?></td>
+                                            <td><?php ##echo $post['created_at']; ?></td>
+                                            <td><?php ##echo $post['updated_at']; ?></td>
                                             <td>
                                                 <a href="">Edit</a> |
                                                 <a href="">Delete</a>
@@ -71,6 +77,7 @@
                                         </tr>
 
                                     <?php
+                                         ##}
                                          }
                                     ?>
                                 </tbody>
